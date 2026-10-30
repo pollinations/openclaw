@@ -64,7 +64,8 @@ untouched.
 ## Legacy one-liner
 
 The old `curl ... | bash -s -- KEY` script still works and forwards to the
-same CLI:
+same published CLI. The key is passed through the process environment; the
+website never receives it:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/pollinations/openclaw/main/setup-pollinations.sh | bash -s -- YOUR_API_KEY

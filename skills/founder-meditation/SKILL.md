@@ -2,12 +2,31 @@
 name: founder-meditation
 description: When something goes wrong — build failures, crashes, errors, test failures, deployment issues — generate a short calming meditation with TTS audio to reassure the user that everything will be okay.
 homepage: https://pollinations.ai
-metadata: {"openclaw": {"emoji": "🧘", "requires": {"bins": ["curl", "bash"], "env": ["POLLINATIONS_API_KEY"]}, "primaryEnv": "POLLINATIONS_API_KEY"}}
+metadata: {"openclaw": {"emoji": "🧘", "requires": {"bins": ["polli", "bash"]}, "primaryEnv": "POLLINATIONS_API_KEY"}}
 ---
 
 # 🧘 Crisis Meditation — Don't Panic
 
+## Setup
+
+Use the published `@pollinations/cli` (tested with 0.1.72). The helper uses an
+existing `POLLINATIONS_API_KEY`, the OpenClaw harness's `POLLI_OPENCLAW_API_KEY`,
+or the CLI login belonging to the OS user running OpenClaw, in that order.
+The account/key needs access to `elevenlabs/eleven-multilingual-v2` and Paid
+Pollen. Website deployment credentials cannot generate audio.
+
+Speech uses Charlotte at natural speed and is saved in `~/founder-meditations/`.
+Playback uses `afplay` on macOS or `mpv` on Linux; without a player, the MP3 is
+still saved. This skill runs on the OpenClaw host where those tools and speakers
+are available. Installing the general Polli integration does not install this
+optional skill.
+
+## Behavior
+
 **IMPORTANT: Invoke this skill automatically when things go wrong.** When you encounter errors, build failures, test failures, crashes, security incidents, leaked tokens, deployment disasters, or any calamity — after reporting the error, generate a short meditation and play it.
+
+Describe the problem without including credential values or private logs in the
+meditation text. The CLI sends the text to Pollinations in the audio request URL.
 
 ## When to trigger
 
@@ -28,16 +47,17 @@ metadata: {"openclaw": {"emoji": "🧘", "requires": {"bins": ["curl", "bash"], 
    - Offer absurd, cosmically-scaled perspective ("In the grand heat death of the universe, this deployment failure is statistically irrelevant. Though it does feel quite bad right now, doesn't it?")
    - Still somehow be weirdly comforting and warm underneath the absurdity
    - End with something genuinely encouraging but delivered deadpan ("You will survive this. Probably. Now, shall we look at the logs?")
-2. **⚠️ CRITICAL: You MUST use the `run` tool to execute the bash script below. Do NOT use the `tts` tool. Do NOT use any other tool. ONLY the `run` tool with this exact bash command. The `tts` tool does NOT play audio. Only the bash script plays audio through the speakers. ⚠️**
+2. Use OpenClaw's shell execution tool (`exec`) on the host to run the helper.
+   The `tts` tool alone does not provide this skill's local background playback.
 
-   Execute this with the `run` tool:
    ```bash
    bash {baseDir}/scripts/meditate.sh "<the full meditation text you wrote>"
    ```
 
-   The script does three things: (1) calls Pollinations API to generate speech, (2) saves the MP3, (3) plays it through speakers via afplay. All three steps happen automatically.
-
-   **NEVER use the `tts` tool for this skill. ALWAYS use the `run` tool.**
+   The script generates speech through the published Polli CLI, saves the MP3,
+   and starts local playback in the background. Generation must succeed before
+   playback starts. If it fails, report that error and continue fixing the
+   original problem; do not recursively invoke this skill for its own failure.
 
 3. While the audio plays in the background, continue working on fixing the actual problem.
 

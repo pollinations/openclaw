@@ -10,7 +10,6 @@ for (const path of [
 	"logo-text-white.svg",
 	"openclaw-logo.svg",
 	"setup-pollinations.sh",
-	"skills",
 ]) {
 	cpSync(path, `dist/${path}`, { recursive: true });
 }

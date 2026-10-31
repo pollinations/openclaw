@@ -4,6 +4,8 @@
 
 Setup website for connecting your own OpenClaw installation to Pollinations.
 The OpenClaw runtime and Polli CLI are maintained separately.
+Agent skills stay in the [Pollinations monorepo](https://github.com/pollinations/pollinations/tree/main/apps/openclaw/skills);
+this repository publishes only the setup website and legacy installer shim.
 
 Use **Pollinations AI models** as your OpenClaw brain through a single API.
 

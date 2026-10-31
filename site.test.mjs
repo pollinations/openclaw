@@ -38,6 +38,7 @@ test("standalone build contains every referenced local asset and no repository m
 		"package.json",
 		"README.md",
 		"deploy.json",
+		"skills",
 	]) {
 		assert.ok(
 			!existsSync(resolve(output, path)),

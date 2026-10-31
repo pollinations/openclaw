@@ -5,6 +5,18 @@
 Setup website for connecting your own OpenClaw installation to Pollinations.
 The OpenClaw runtime and Polli CLI are maintained separately.
 
+This repository also contains the optional
+[`founder-meditation` skill](skills/founder-meditation/SKILL.md). It is an OpenClaw
+skill, not a hosted Pollinations agent. Copy that folder into your OpenClaw
+workspace's `skills/` directory and start a new session to enable it. The normal
+setup below installs only the general Polli skill.
+
+When enabled, the meditation skill keeps its automatic error triggers and uses
+the published CLI to generate Charlotte speech, then plays it locally in the
+background. Its setup notes describe authentication and player requirements.
+Charlotte uses natural speed: the old helper's `speed: 0.9` request was not
+supported with that voice.
+
 Use **Pollinations AI models** as your OpenClaw brain through a single API.
 
 The maintained setup path is the Polli CLI. It adds a `pollinations` provider

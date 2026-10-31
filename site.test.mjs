@@ -1,8 +1,21 @@
 import assert from "node:assert/strict";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import test from "node:test";
+
+test("meditation rejects missing text before calling generation or playback", () => {
+	const result = spawnSync(
+		"/bin/bash",
+		["skills/founder-meditation/scripts/meditate.sh"],
+		{
+			encoding: "utf8",
+			env: { PATH: "/usr/bin:/bin" },
+		},
+	);
+	assert.equal(result.status, 1);
+	assert.match(result.stdout, /Usage: meditate\.sh/);
+});
 
 test("standalone build contains every referenced local asset and no repository metadata", () => {
 	execFileSync(process.execPath, ["build.mjs"]);

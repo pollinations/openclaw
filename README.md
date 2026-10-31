@@ -37,10 +37,11 @@ npm i -g @pollinations/cli
 **Step 2:** Connect OpenClaw to Pollinations:
 
 ```bash
-polli harness openclaw on
+npx @pollinations/cli harness openclaw on
 ```
 
-This opens a browser login on first run (or use `--no-browser`), creates a
+This published CLI command replaces the retired shell installer. It opens a
+browser login on first run (or use `--no-browser`), creates a
 dedicated key, initializes OpenClaw when needed, and writes the provider into
 `~/.openclaw/openclaw.json`. Choose a different default model with `--model
 <id>` (any tool-calling text model from `polli models`):
@@ -72,16 +73,6 @@ polli harness openclaw off      # remove only the Pollinations setup
 removes only the Pollinations provider, the dedicated key, a `pollinations/*`
 default model, and the skill — leaving the rest of your OpenClaw configuration
 untouched.
-
-## Legacy one-liner
-
-The old `curl ... | bash -s -- KEY` script still works and forwards to the
-same published CLI. The key is passed through the process environment; the
-website never receives it:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/pollinations/openclaw/main/setup-pollinations.sh | bash -s -- YOUR_API_KEY
-```
 
 ## Links
 
